@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.dao.IDao;
+import org.example.dao.IPeopleDao;
 import org.example.dao.PersonDaoSingleton;
 import org.example.models.*;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class Main {
 
     public static void main(String[] args) {
-        IDao<Person> personDao = PersonDaoSingleton.getInstance();
+        IPeopleDao<Person> personDao = PersonDaoSingleton.getInstance();
 
         Address address = new Address("Street", "City", 12345);
 
@@ -47,6 +47,8 @@ public class Main {
         personDao.read(person.getId()).ifPresent(System.out::println);
 
         personDao.read().forEach(System.out::println);
+
+        personDao.read("email@email.com").ifPresent(System.out::println);
 
         personDao.delete(person);
     }

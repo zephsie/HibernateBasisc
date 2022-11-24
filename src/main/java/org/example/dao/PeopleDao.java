@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import java.util.Collection;
 import java.util.Optional;
 
-public class PeopleDao implements IDao<Person> {
+public class PeopleDao implements IPeopleDao<Person> {
     private final EntityManager entityManager;
 
     public PeopleDao(EntityManager entityManager) {
@@ -37,6 +37,11 @@ public class PeopleDao implements IDao<Person> {
     @Override
     public Collection<Person> read() {
         return entityManager.createQuery("SELECT DISTINCT p FROM Person p JOIN FETCH p.billingDetails", Person.class).getResultList();
+    }
+
+    @Override
+    public Optional<Person> read(String email) {
+        return Optional.ofNullable(entityManager.createQuery("SELECT DISTINCT p FROM Person p WHERE p.email = :email", Person.class).setParameter("email", email).getSingleResult());
     }
 
     @Override

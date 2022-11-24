@@ -14,7 +14,11 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "person", schema = "structure")
+@Table(name = "person", schema = "structure",
+    indexes = {
+        @Index(name = "person_email_idx", columnList = "email"),
+    }
+)
 @DynamicUpdate
 public class Person {
 
@@ -80,7 +84,7 @@ public class Person {
     @Access(AccessType.PROPERTY)
     @Getter
     @Setter
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BillingDetails> billingDetails = new HashSet<>();
 
     @Column(name = "creation", columnDefinition = "TIMESTAMP", updatable = false)

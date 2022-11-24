@@ -22,7 +22,7 @@ public abstract class BillingDetails {
     @Access(AccessType.PROPERTY)
     @Getter
     @Setter
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private Person owner;
 
